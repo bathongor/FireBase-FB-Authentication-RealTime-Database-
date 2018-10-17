@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<style media="screen">
+	body{background-color: coral;}
+	.hidden{
+		display:none;
+	}
+	a{
+		font-size: 27px;
+	}
+
+	a:hover{
+		color: white;	
+	}
+
+	p{
+		font-size: 25px;
+		font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	}
+
+	h1{
+		font-size: 40px;
+	}
+
+	#bigtitle{
+		display: block;
+		font-size: 60px;
+	}
+
+	.hidden{
+		display:none;
+	}
+
+</style>
+
+<html>
+
+	<head>
+		<meta charset= "utf-8">
+		<!--Initialize Firebase Resources-->
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-database.js"></script>
+		<script></script>
+	</head>
+
+	<body>
+		<div id="status"></div>
+
+		<!--FB Login button-->
+		<center>
+			<div id="fb-root"></div>
+			<script>
+				//Define statusChangeCallBack for FB Login
+				function statusChangeCallback(response) {
+					console.log('statusChangeCallback');
+					console.log(response);
+					if (response.status === 'connected') {
+						// Logged into your app and Facebook.
+						console.log('Welcome!  Fetching your information.... ');
+						FB.api('/me', function (response) {
+							console.log('Successful login for: ' + response.name);
+							alert('Thanks for logging in, ' + response.name + '!');
+         				   	document.getElementById('eventClick').style.display = 'block';
+						});
+					} else {
+						// The person is not logged into your app or we are unable to tell.
+						alert('Please log ' + 'into this app.');
+						}
+				}
+				//FaceBook Login Status Check
+				function checkLoginState() {
+					FB.getLoginStatus(function(response) {
+					statusChangeCallback(response);
+					});
+											}
+				//Script for FB btn						
+				(function(d, s, id) {
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) return;
+					js = d.createElement(s); js.id = id;
+					js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1&appId=517342465397969&autoLogAppEvents=1';
+					fjs.parentNode.insertBefore(js, fjs);
+					}(document, 'script', 'facebook-jssdk'));
+			</script>
+		</center>
+
+		<!--FB Plugin to appear on page-->
+		<center>
+		<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+		</center>
+		
+		<!--Checks whether FB user has signed in-->
+		<center>
+				<fb:login-button 
+				scope="public_profile,email"
+				onlogin="checkLoginState();">
+				</fb:login-button>
+		</center>
+
+		<!--Main HTML page element-->
+		<div id="message">
+			<center><h1 id="login">Welcome!</h1></center>
+			<center><p>Click below to sign-in anonymously or proceed directly!</p></center>
+		</div>
+
+		<center><h1 id="ClickMe"></h1></center>
+
+		<center><input id="eventClick" type="button" value="Incrementally Increase"></center>
+		
+		
+		<script src="app9.js"></script>
+	</body>  
+
+
+</html>
+
+
